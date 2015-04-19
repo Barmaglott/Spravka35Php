@@ -20,49 +20,70 @@ spl_autoload_register(function ($class_name){
 		//Выборка всех заказов без отзывов(но с кол-вом)
 		public function getAllOrder(){
 			$dbc=new DataBase();
-			$obj=new Order();
-			$result = $dbc->query("SELECT * FROM spravka35.order ORDER BY spravka35.order.date_create DESC", $obj);
-			foreach ($result as $order){
-				$num = $dbc->selectQuery("SELECT * FROM spravka35.bid WHERE fk_id_order='$order->id_order'" );
-				$order->numBid = $num->num_rows;
+			$objOrderOM=new Order();
+			$resultOM = $dbc->queryReturnArray("SELECT * FROM spravka35.order ORDER BY spravka35.order.date_create DESC", $objOrderOM);
+			foreach ($resultOM as $orderOM){
+				$num = $dbc->querySelect("SELECT * FROM spravka35.bid WHERE fk_id_order='$orderOM->id_order'" );
+				$orderOM->numBid = $num->num_rows;
 			}
-			return $result;
+			return $resultOM;
 		}
 		//Выборка заказов по id заказчика
 		public function getIdClientOrder($id){
 			$dbc=new DataBase();
-			$obj=new Order();
-			$result = $dbc->query("SELECT * FROM spravka35.order WHERE fk_id_client='$id' ORDER BY spravka35.order.date_create DESC", $obj);
-			foreach ($result as $order){
-				$obj1=new Bid();
-				$res = $dbc->query("SELECT * FROM spravka35.bid WHERE fk_id_order='$order->id_order'", $obj1);
+			$objOrderOM=new Order();
+			$objBidOM=new Bid();
+			$resultOM = $dbc->queryReturnArray("SELECT * FROM spravka35.order WHERE fk_id_client='$id' ORDER BY spravka35.order.date_create DESC", $objOrderOM);
+			foreach ($resultOM as $orderOM){
+				
+				$resOM = $dbc->queryReturnArray("SELECT * FROM spravka35.bid WHERE fk_id_order='$orderOM->id_order'", $objBidOM);
 				//var_dump($res);
-				foreach ($res as $bid){
-					$order->listBid=$bid;
+				foreach ($resOM as $bidOM){
+					$orderOM->listBid=$bidOM;
 				}
 			}
-			return $result;
+			return $resultOM;
 		}
 		//Выборка заказов с отзывами по id заказа
-		public function getIdOrder($id){
+		public function getOrderId($id){
 			$dbc=new DataBase();
-			$obj=new Order();
-			$result = $dbc->query("SELECT * FROM spravka35.order WHERE id_order='$id'", $obj);
-			foreach ($result as $order){
-				$obj1=new Bid();
-				$res = $dbc->query("SELECT * FROM spravka35.bid WHERE fk_id_order='$order->id_order'", $obj1);
-				//var_dump($res);
-				foreach ($res as $bid){
-					$order->listBid=$bid;
+			$objOrderOM=new Order();
+			$objBidOM = new Bid();
+			
+			$resultOM = $dbc->queryReturnArray("SELECT * FROM spravka35.order WHERE id_order='$id'", $objOrderOM);
+			foreach ($resultOM as $orderOM){
+				//$obj1=new Bid();
+				$resOM = $dbc->queryReturnArray("SELECT * FROM spravka35.bid WHERE fk_id_order='$orderOM->id_order'", $objBidOM);
+				foreach ($resOM as $bidOM){
+					$orderOM->listBid = $bidOM;
 				}
-				$order->numBid = count($order->listBid);
+				$orderOM->numBid = count($orderOM->listBid);
 			}
-			return $result;
+		
+			return $resultOM;
+		}
+		//Выборка заказов с отзывами по id заказа
+		public function getOrderIdReturnObject($id){
+			$dbc=new DataBase();
+			$objBidOM = new Order();
+			$objBidOM = new Bid();
+				
+			$orderOM = $dbc->queryReturnObject("SELECT * FROM spravka35.order WHERE id_order='$id'", $objOrderOM);
+			
+				//$obj1=new Bid();
+			$resultOM = $dbc->queryReturnArray("SELECT * FROM spravka35.bid WHERE fk_id_order='$orderOM->id_order'", $objBidOM);
+			foreach ($resultOM as $bidOM){
+				$orderOM->listBid = $bidOM;
+			}
+			$orderOM->numBid = count($orderOM->listBid);
+			
+		
+			return $orderOM;
 		}
 		//Добавление заказов
 		public function addOrder($title, $describe_order,$user_id){
 			$dbc = new DataBase();
-			$dbc->addQuery("INSERT spravka35.order VALUES (0,'$title' , '$describe_order', NOW(), '$user_id')");
+			$dbc->queryAdd("INSERT spravka35.order VALUES (0,'$title' , '$describe_order', NOW(), '$user_id')");
 		}
 
 

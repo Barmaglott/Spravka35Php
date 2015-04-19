@@ -11,4 +11,4 @@ if ($resIdent['data'] instanceof ru\barmaglott\DAO\Employee) {
 }
 
 ?>   
-<p><a href="logout.php">Выйти.</a></p>
+<p><a href="logout.php" >Выйти.</a></p>

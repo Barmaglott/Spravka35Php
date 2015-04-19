@@ -7,10 +7,11 @@ class OrderController{
 	public function listAllOrderByUser(){
 		//if (get_class(User::getInstance())=='Client')
 		
-		if ($_SESSION['user'] instanceof Client )
+		if ($_SESSION['user'] instanceof Client ){
 			$orderModel = new OrderModel();
 			$listOrderByUser = 	$orderModel->getIdClientOrder($_SESSION['user']->id);
 			return array('data'=>$listOrderByUser, 'view'=>'ru/barmaglott/View/orderView.php');
+		}
 	}
 	public function addOrder(){
 		if (isset($_POST['submit'])){

@@ -10,7 +10,10 @@ class IndexController{
 	public function listOrderById($id){
 		$result = $this->listAllOrder();
 		$orerModel = new OrderModel();
-		$result['data_bid'] = $orerModel->getIdOrder($id);
+		$order =  $orerModel->getOrderId($id);
+		//$_SESSION['id'] = $order;
+		$result['data_bid'] = $order;
+	
 		return $result;
 	}
 	public function listAllOrderByUser($user){

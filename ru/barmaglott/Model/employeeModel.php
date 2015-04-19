@@ -17,17 +17,17 @@ class EmployeeModel{
 	public function getAllEmployee(){
 		$dbc=new DataBase();
 		$obj=new Employee();
-		$result = $dbc->query("SELECT * FROM employee", $obj);
+		$result = $dbc->queryReturnArray("SELECT * FROM employee", $obj);
 		return $result;
 	}
 	//Выборка исполнителя по его id
 	public function getIdEmployee($id){
 		$dbc=new DataBase();
 		$obj=new Employee();
-		$result = $dbc->query("SELECT * FROM employee WHERE id='$id'", $obj);
+		$result = $dbc->queryReturnArray("SELECT * FROM employee WHERE id='$id'", $obj);
 		foreach ($result as $employee){
 			$obj1=new Bid();
-			$res = $dbc->query("SELECT * FROM spravka35.bid WHERE fk_id_employee='$employee->id'", $obj1);
+			$res = $dbc->queryReturnArray("SELECT * FROM spravka35.bid WHERE fk_id_employee='$employee->id'", $obj1);
 			//var_dump($res);
 			foreach ($res as $bid){
 				$employee->listBid=$bid;
@@ -39,11 +39,11 @@ class EmployeeModel{
 	public function identificationEmployee($login, $password){
 		$dbc=new DataBase();
 		$obj=new Employee();
-		$result = $dbc->query("SELECT * FROM employee WHERE login='$login' AND password=SHA('$password')", $obj);
+		$result = $dbc->queryReturnArray("SELECT * FROM employee WHERE login='$login' AND password=SHA('$password')", $obj);
 		if (count($result)==1) {
 			foreach ($result as $employee){
 				$obj1=new Bid();
-				$res = $dbc->query("SELECT * FROM spravka35.bid WHERE fk_id_employee='$employee->id'", $obj1);
+				$res = $dbc->queryReturnArray("SELECT * FROM spravka35.bid WHERE fk_id_employee='$employee->id'", $obj1);
 				//var_dump($res);
 				foreach ($res as $bid){
 					$employee->listBid=$bid;

@@ -10,7 +10,7 @@
     		echo '<td>Заявок : ' . $table->numBid.'</td>';
     		//Отображаем отзывы на заказ
     		if ($_GET['id']==$table->id_order){
-    			
+    			//$_SESSION['id']=$list['data_bid']->id_order;
     			foreach ($list['data_bid'] as $order){
     				foreach ($order->listBid as $table_bid){
     			
@@ -20,12 +20,15 @@
     					echo '<td>' . $table_bid->describe_bid .'</td>';
     				echo '</tr>';
     				}
+    			$_SESSION['id']=$order->id_order;
     			}
     			echo '<tr>';
     					echo '<td>';
+    						
     						echo $addBid;
     					echo '</td>';
     			echo '</tr>';
+    			
     		}
   		echo '</tr>';
   		 }?>

@@ -26,7 +26,7 @@ class ClientModel{
 	public function getAllClient(){
 		$dbc=new DataBase();
 		$obj=new Client();
-		$result = $dbc->query("SELECT * FROM client", $obj);
+		$result = $dbc->queryReturnArray("SELECT * FROM client", $obj);
 		//При выборе списка выборка заказов НЕ ПРОИСХОДИТ
 		/*
 		foreach ($result as $client){
@@ -45,11 +45,11 @@ class ClientModel{
 		$dbc=new DataBase();
 		$obj=new Client();
 		
-		$result = $dbc->query("SELECT * FROM client WHERE id='$id'", $obj);
+		$result = $dbc->queryReturnArray("SELECT * FROM client WHERE id='$id'", $obj);
 		
 		foreach ($result as $client){
 			$obj1=new Order();
-			$res = $dbc->query("SELECT * FROM spravka35.order WHERE fk_id_client='$client->id'", $obj1);
+			$res = $dbc->queryReturnArray("SELECT * FROM spravka35.order WHERE fk_id_client='$client->id'", $obj1);
 			//var_dump($res);
 			foreach ($res as $order){
 				$client->listOrder=$order;
@@ -61,12 +61,12 @@ class ClientModel{
 	public function identificationClient($login, $password){
 		$dbc=new DataBase();
 		$obj=new Client();
-		$result = $dbc->query("SELECT * FROM client WHERE login='$login' AND password=SHA('$password')", $obj);
+		$result = $dbc->queryReturnArray("SELECT * FROM client WHERE login='$login' AND password=SHA('$password')", $obj);
 		if (count($result)==1) {
 			foreach ($result as $client){
 				//$this->client=$client;
 				$obj1=new Order();
-				$res = $dbc->query("SELECT * FROM spravka35.order WHERE fk_id_client='$client->id'", $obj1);
+				$res = $dbc->queryReturnArray("SELECT * FROM spravka35.order WHERE fk_id_client='$client->id'", $obj1);
 				//var_dump($res);
 				foreach ($res as $order){
 					$client->listOrder=$order;

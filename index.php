@@ -6,7 +6,7 @@
 </head>
 
 <body>
-    <p>This page uses frames. The current browser you are using does not support frames.</p>
+    <p>This is index.</p>
 <?php
 //use ru\barmaglott\DAO\DataBase;
 //use ru\barmaglott\DAO\Client;

@@ -14,19 +14,24 @@ spl_autoload_register(function ($class_name){
 
 class BidModel{
 	
-	//Выборка отзывов по id исполнителя
-	public function getIdEmployeeBid($id){
+	//Выборка отзывов по id исполнителя возвращаем массив
+	public function getBidIdEmployee($id){
 		$dbc=new DataBase();
-		$obj=new Bid();
-		$result = $dbc->query("SELECT * FROM bid WHERE fk_id_employee='$id'", $obj);
-		return $result;
+		$objBidBM = new Bid();
+		$resultBM = $dbc->queryReturnArray("SELECT * FROM bid WHERE fk_id_employee='$id'", $objBidBM);
+		return $resultBM;
 	}
-	//Выборка отзывов по id заказа
-	public function getIdOrderBid($id){
+	//Выборка отзывов по id заказа возвращаем массив
+	public function getBidIdOrder($id){
 		$dbc=new DataBase();
-		$obj=new Bid();
-		$result = $dbc->query("SELECT * FROM bid WHERE fk_id_order='$id'", $obj);
-		return $result;
+		$objBidBM = new Bid();
+		$resultBM = $dbc->queryReturnArray("SELECT * FROM bid WHERE fk_id_order='$id'", $objBidBM);
+		return $resultBM;
+	}
+	//Добавление отзыва
+	public function addBid($title, $describe_bid, $fk_id_employee, $fk_id_order ){
+		$dbc = new DataBase();
+		$dbc->queryAdd("INSERT spravka35.bid VALUES (0,'$title' , '$describe_bid', '$fk_id_employee', '$fk_id_order')");
 	}
 		
 	
