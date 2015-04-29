@@ -3,11 +3,12 @@ namespace ru\barmaglott\DAO;
 class Order{
 	private $id_order;
 	private $title;
-	private $describe_order;
+	private $depiction;
 	private $date_create;
 	private $fk_id_client;
-	private $numBid;
-	private $listBid;
+	private $login;
+	private $num;
+	private $list;
 	/*
 	public function __construct($id_order, $title, $describe_order, $date_create, $fk_id_client) {
 		$this->id_order = $id_order;
@@ -20,22 +21,24 @@ class Order{
 		switch ($property) {
 			case 'id_order' :	$this->id_order = $value;	break;
 			case 'title' :	$this->title = $value; break;
-			case 'describe_order' : $this->describe_order = $value; break;
+			case 'depiction' : $this->depiction = $value; break;
 			case 'date_create' :	$this->date_create = $value;	break;
 			case 'fk_id_client' : $this->fk_id_client = $value; break;
-			case 'numBid' : $this->numBid = $value; break;
-			case 'listBid' : $this->listBid[] = $value; break;
+			case 'login' : $this->login = $value; break;
+			case 'num' : $this->num = $value; break;
+			case 'list' : $this->list[] = $value; break;
 		}
 	}
 	public function __get($property) {
 		switch ($property) {
 			case 'id_order' : return $this->id_order;
 			case 'title' : return $this->title;
-			case 'describe_order' : return $this->describe_order;
+			case 'depiction' : return $this->depiction;
 			case 'date_create' : return $this->date_create;
 			case 'fk_id_client' : return $this->fk_id_client;
-			case 'numBid' : return $this->numBid;
-			case 'listBid' : return $this->listBid;
+			case 'login' : return $this->login;
+			case 'num' : return $this->num;
+			case 'list' : return $this->list;
 			break;
 		}
 	}

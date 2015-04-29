@@ -40,6 +40,7 @@ class ClientModel{
 		}*/
 		return $result;
 	}
+	//TODO Переименовать в getClientById
 	//Выборка клиента по его id
 	public function getIdClient($id){
 		$dbc=new DataBase();
@@ -52,10 +53,27 @@ class ClientModel{
 			$res = $dbc->queryReturnArray("SELECT * FROM spravka35.order WHERE fk_id_client='$client->id'", $obj1);
 			//var_dump($res);
 			foreach ($res as $order){
-				$client->listOrder=$order;
+				$client->list = $order;
 			}
 		}
 		return $result;
+	}
+	//Выборка клиента по его логину
+	public function getClientByName($login){
+		$dbc=new DataBase();
+		$obj=new Client();
+	
+		$result = $dbc->queryReturnArray("SELECT * FROM client WHERE login='$login'", $obj);
+	
+		foreach ($result as $client){
+			$obj1=new Order();
+			$res = $dbc->queryReturnArray("SELECT * FROM spravka35.order WHERE fk_id_client='$client->id'", $obj1);
+			//var_dump($res);
+			foreach ($res as $order){
+				$client->list = $order;
+			}
+		}
+		return $result[0];
 	}
 	//Идентификация клиента по паре логин-пароль
 	public function identificationClient($login, $password){
@@ -69,7 +87,7 @@ class ClientModel{
 				$res = $dbc->queryReturnArray("SELECT * FROM spravka35.order WHERE fk_id_client='$client->id'", $obj1);
 				//var_dump($res);
 				foreach ($res as $order){
-					$client->listOrder=$order;
+					$client->list = $order;
 				}
 			
 			}
@@ -79,6 +97,14 @@ class ClientModel{
 			$result = false;
 		}
 		return $result;
+	}
+	//Update профиль клиента
+	public function updateProfileClient($id, $login, $password, $email){
+		$dbc=new DataBase();
+		//$obj=new Client();
+		$result = $dbc->queryAdd("UPDATE spravka35.client SET password = SHA('$password'), email = '$email' WHERE id = '$id' and login = '$login' ");
+		
+		
 	}
 	
 	

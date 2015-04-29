@@ -23,7 +23,7 @@ $messEmployee = '<p>Как вы сюда попали? <a href = "index.php">Н�
 include_once 'identification.php';
 
 $orderController = new OrderController();
-$orderController->addOrder();
+if (isset($_POST['submit'])){$orderController->addOrder();}
 $list = $orderController->listAllOrderByUser();
 	
 include_once $list['view'];

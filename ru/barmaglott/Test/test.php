@@ -16,6 +16,7 @@ use ru\barmaglott\Model\ClientModel;
 use ru\barmaglott\Model\OrderModel;
 use ru\barmaglott\Controller\IndexController;
 use ru\barmaglott\Model\User;
+//TODO добавить тестов для всех контроллеров
 
 	
     

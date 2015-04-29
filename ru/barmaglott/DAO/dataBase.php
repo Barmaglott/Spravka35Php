@@ -35,9 +35,14 @@ class DataBase{
 	//Запрос на выборку конструирует объект и возвращает этот объект queryReturnObject
 	public  function queryReturnObject($query, $obj_user){
 		$result = mysqli_query($this->mysqli, $query)
-			or die("Капец запросу");
-		//$objResult = $result->fetch_object(get_class($odj));
-		return $result->fetch_object(get_class($obj_user));
+			or die('Капец запросу');
+		while ($obj = $result->fetch_object(get_class($obj_user))){
+			//var_dump($obj);
+			//echo $obj->login.'<br />';
+			//echo $obj->password.'<br />';
+			$array[]=$obj;
+		}
+		return $array[0];
 	}
 }
 

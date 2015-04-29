@@ -1,5 +1,5 @@
 <p>Вы вошли в приложение как <?php echo $resIdent['data']->login;?>.</p> 
-<p>Редактировать профиль.</p>
+<p><a href="profile.php?edit">Редактировать профиль.</a></p>
 <?php 
 if($resIdent['data'] instanceof ru\barmaglott\DAO\Client) {
 	echo $messClient;

@@ -21,10 +21,14 @@ spl_autoload_register(function ($class_name){
 		public function getAllOrder(){
 			$dbc=new DataBase();
 			$objOrderOM=new Order();
-			$resultOM = $dbc->queryReturnArray("SELECT * FROM spravka35.order ORDER BY spravka35.order.date_create DESC", $objOrderOM);
+			$resultOM = $dbc->queryReturnArray("SELECT o.id_order, o.title, o.depiction, o.date_create, c.login
+  												FROM spravka35.order o INNER JOIN spravka35.client c 
+												ON o.fk_id_client = c.id 
+												ORDER BY o.date_create DESC"
+												, $objOrderOM);
 			foreach ($resultOM as $orderOM){
 				$num = $dbc->querySelect("SELECT * FROM spravka35.bid WHERE fk_id_order='$orderOM->id_order'" );
-				$orderOM->numBid = $num->num_rows;
+				$orderOM->num = $num->num_rows;
 			}
 			return $resultOM;
 		}
@@ -33,13 +37,21 @@ spl_autoload_register(function ($class_name){
 			$dbc=new DataBase();
 			$objOrderOM=new Order();
 			$objBidOM=new Bid();
-			$resultOM = $dbc->queryReturnArray("SELECT * FROM spravka35.order WHERE fk_id_client='$id' ORDER BY spravka35.order.date_create DESC", $objOrderOM);
+			$resultOM = $dbc->queryReturnArray("SELECT o.id_order, o.title, o.depiction, o.date_create, c.login
+  												FROM spravka35.order o INNER JOIN spravka35.client c 
+												ON o.fk_id_client = c.id 
+												 WHERE o.fk_id_client='$id' "
+												, $objOrderOM);
 			foreach ($resultOM as $orderOM){
 				
-				$resOM = $dbc->queryReturnArray("SELECT * FROM spravka35.bid WHERE fk_id_order='$orderOM->id_order'", $objBidOM);
+				$resOM = $dbc->queryReturnArray("SELECT b.id_bid, b.title, b.depiction, e.login
+  												FROM spravka35.bid b INNER JOIN spravka35.employee e 
+												ON b.fk_id_employee = e.id 
+												WHERE b.fk_id_order='$orderOM->id_order'"
+												, $objBidOM);
 				//var_dump($res);
 				foreach ($resOM as $bidOM){
-					$orderOM->listBid=$bidOM;
+					$orderOM->list = $bidOM;
 				}
 			}
 			return $resultOM;
@@ -50,14 +62,22 @@ spl_autoload_register(function ($class_name){
 			$objOrderOM=new Order();
 			$objBidOM = new Bid();
 			
-			$resultOM = $dbc->queryReturnArray("SELECT * FROM spravka35.order WHERE id_order='$id'", $objOrderOM);
+			$resultOM = $dbc->queryReturnArray("SELECT o.id_order, o.title, o.depiction, o.date_create, c.login
+  												FROM spravka35.order o INNER JOIN spravka35.client c 
+												ON o.fk_id_client = c.id 
+												 WHERE o.id_order='$id' "
+												, $objOrderOM);
 			foreach ($resultOM as $orderOM){
 				//$obj1=new Bid();
-				$resOM = $dbc->queryReturnArray("SELECT * FROM spravka35.bid WHERE fk_id_order='$orderOM->id_order'", $objBidOM);
+				$resOM = $dbc->queryReturnArray("SELECT b.id_bid, b.title, b.depiction, e.login
+  												FROM spravka35.bid b INNER JOIN spravka35.employee e 
+												ON b.fk_id_employee = e.id 
+												WHERE b.fk_id_order='$orderOM->id_order'"
+												, $objBidOM);
 				foreach ($resOM as $bidOM){
-					$orderOM->listBid = $bidOM;
+					$orderOM->list = $bidOM;
 				}
-				$orderOM->numBid = count($orderOM->listBid);
+				$orderOM->num = count($orderOMOM->list);
 			}
 		
 			return $resultOM;
@@ -73,9 +93,9 @@ spl_autoload_register(function ($class_name){
 				//$obj1=new Bid();
 			$resultOM = $dbc->queryReturnArray("SELECT * FROM spravka35.bid WHERE fk_id_order='$orderOM->id_order'", $objBidOM);
 			foreach ($resultOM as $bidOM){
-				$orderOM->listBid = $bidOM;
+				$orderOM->list = $bidOM;
 			}
-			$orderOM->numBid = count($orderOM->listBid);
+			$orderOM->num = count($orderOM->list);
 			
 		
 			return $orderOM;

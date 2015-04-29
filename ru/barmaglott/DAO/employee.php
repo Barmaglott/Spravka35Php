@@ -5,7 +5,7 @@ class Employee{
 	private $login;
 	private $password;
 	private $email;
-	private $listBid;
+	private $list;
 	/*
 	public function __construct(){
 
@@ -17,7 +17,7 @@ class Employee{
 			case 'login' :	$this->login = $value; break;
 			case 'password' : $this->password = $value; break;
 			case 'email' :	$this->email = $value;	break;
-			case 'listBid' : $this->listBid[] = $value; break;
+			case 'list' : $this->list[] = $value; break;
 		}
 	}
 	public function __get($property) {
@@ -26,7 +26,7 @@ class Employee{
 			case 'login' : return $this->login;
 			case 'password' : return $this->password;
 			case 'email' : return $this->email;
-			case 'listBid' : $this->listBid[] = $value; break;
+			case 'list' : return $this->list;
 			break;
 		}
 	}

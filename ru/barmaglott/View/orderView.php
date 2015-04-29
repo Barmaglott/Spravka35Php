@@ -13,9 +13,9 @@
 		foreach ($list['data'] as $table){
     	echo '<tr>';
     		echo '<td>' . $table->title . '</td>';
-    		echo '<td>' . $table->describe_order . '</td>';
+    		echo '<td>' . $table->depiction . '</td>';
     		echo '<td>' . $table->date_create . '</td>';
-    		echo '<td>Заявок : ' . count($table->listBid).'</td>';
+    		echo '<td>Заявок : ' . count($table->list) . '</td>';
   		echo '</tr>';
   		 }?>
 </table>

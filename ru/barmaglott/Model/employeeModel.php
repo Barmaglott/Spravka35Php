@@ -30,10 +30,25 @@ class EmployeeModel{
 			$res = $dbc->queryReturnArray("SELECT * FROM spravka35.bid WHERE fk_id_employee='$employee->id'", $obj1);
 			//var_dump($res);
 			foreach ($res as $bid){
-				$employee->listBid=$bid;
+				$employee->list = $bid;
 			}
 		}
 		return $result;
+	}
+	//Выборка исполнителя по его логину
+	public function getEmployeeByName($login){
+		$dbc=new DataBase();
+		$obj=new Employee();
+		$result = $dbc->queryReturnArray("SELECT * FROM employee WHERE login='$login'", $obj);
+		foreach ($result as $employee){
+			$obj1=new Bid();
+			$res = $dbc->queryReturnArray("SELECT * FROM spravka35.bid WHERE fk_id_employee='$employee->id'", $obj1);
+			//var_dump($res);
+			foreach ($res as $bid){
+				$employee->list = $bid;
+			}
+		}
+		return $result[0];
 	}
 	//Идентификация исполнителя по паре логин-пароль
 	public function identificationEmployee($login, $password){
@@ -46,7 +61,7 @@ class EmployeeModel{
 				$res = $dbc->queryReturnArray("SELECT * FROM spravka35.bid WHERE fk_id_employee='$employee->id'", $obj1);
 				//var_dump($res);
 				foreach ($res as $bid){
-					$employee->listBid=$bid;
+					$employee->list = $bid;
 				}
 			}
 			$_SESSION['user'] = $result[0];

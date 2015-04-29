@@ -1,7 +1,7 @@
 <?php
 namespace ru\barmaglott\Controller;
 use ru\barmaglott\Model\OrderModel;
-use ru\barmaglott\Model\User;
+//use ru\barmaglott\Model\User;
 use ru\barmaglott\DAO\Client;
 class OrderController{
 	public function listAllOrderByUser(){
@@ -14,10 +14,9 @@ class OrderController{
 		}
 	}
 	public function addOrder(){
-		if (isset($_POST['submit'])){
-			$orderModel = new OrderModel();
-			$orderModel->addOrder($_POST['title'], $_POST['describe_order'], $_SESSION['user']->id);
-		}
+		$orderModel = new OrderModel();
+		$orderModel->addOrder($_POST['title'], $_POST['describe_order'], $_SESSION['user']->id);
+		
 	}
 }
 
