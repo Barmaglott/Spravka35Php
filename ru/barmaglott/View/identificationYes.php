@@ -1,14 +1,18 @@
-<p>Вы вошли в приложение как <?php echo $resIdent['data']->login;?>.</p> 
-<p><a href="profile.php?edit">Редактировать профиль.</a></p>
-<?php 
-if($resIdent['data'] instanceof ru\barmaglott\DAO\Client) {
+<p>Вы вошли в приложение как <?php echo $resIdent['data']->login;?>.</p>
+<p>
+	<a href="profile.php?edit">Редактировать профиль.</a>
+</p>
+<?php
+if ($resIdent ['data'] instanceof ru\barmaglott\DAO\Client) {
 	echo $messClient;
-	$addBid="";
+	$addBid = "";
 }
-if ($resIdent['data'] instanceof ru\barmaglott\DAO\Employee) {
+if ($resIdent ['data'] instanceof ru\barmaglott\DAO\Employee) {
 	echo $messEmployee;
-	$addBid='<a href="bid.php">Добавить заявку</a>';
+	$addBid = "bid.php";
 }
 
-?>   
-<p><a href="logout.php" >Выйти.</a></p>
+?>
+<p>
+	<a href="logout.php">Выйти.</a>
+</p>
