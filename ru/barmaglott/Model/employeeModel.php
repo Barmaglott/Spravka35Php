@@ -44,7 +44,10 @@ class EmployeeModel {
 		$result = $dbc->queryReturnArray ( "SELECT * FROM employee WHERE login='$login'", $obj );
 		foreach ( $result as $employee ) {
 			$obj1 = new Bid ();
-			$res = $dbc->queryReturnArray ( "SELECT * FROM spravka35.bid WHERE fk_id_employee='$employee->id'", $obj1 );
+			$res = $dbc->queryReturnArray ( "SELECT b.id_bid, b.title, b.depiction, b.fk_id_employee, b.fk_id_order, b.selected 
+											FROM spravka35.bid b inner join spravka35.order o 
+											ON b.fk_id_order=o.id_order 
+											WHERE o.approved =1 AND b.fk_id_employee='$employee->id'", $obj1 );
 			// var_dump($res);
 			foreach ( $res as $bid ) {
 				$employee->list = $bid;
@@ -80,9 +83,9 @@ class EmployeeModel {
 		// password = SHA('$password')
 		$result = $dbc->queryAdd ( "UPDATE spravka35.employee SET  email = '$email' WHERE id = '$id' and login = '$login' " );
 	}
-	public function insertProfileEmployee($login, $password, $email) {
+	public function insertProfileEmployee($login, $password, $email, $phone) {
 		$dbc = new DataBase ();
-		$dbc->queryAdd ( "INSERT INTO spravka35.employee (login, password, email) VALUES ('$login', SHA('$password'), '$email')" );
+		$dbc->queryAdd ( "INSERT INTO spravka35.employee (login, password, email, phone, date_create) VALUES ('$login', SHA('$password'), '$email', '$phone', NOW())" );
 	}
 }
 ?>

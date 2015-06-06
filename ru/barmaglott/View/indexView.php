@@ -1,21 +1,6 @@
 
 <script type="text/javascript">
 
-var old_element_id;
-function showHideOld(element_id){
-	
-	if (document.getElementById(element_id)!=document.getElementById(old_element_id)){
-		var obj = document.getElementById(element_id);
-		var old_obj = document.getElementById(old_element_id);
-		if (obj.style.display=="none"){
-			obj.style.display = "block";
-			old_obj.style.display = "none";
-		}else if (obj.style.display=="block"){
-			obj.style.display = "none";
-		}
-		old_element_id = element_id;	
-	}
-}
 function showHide(element_id){
 	var obj = document.getElementById(element_id);
 	if(obj.style.display=="none"){
@@ -25,8 +10,9 @@ function showHide(element_id){
 	}		
 }
 
-<!--
-//-->
+
+
+
 </script>
 <div id="page">
 	<div id="content">
@@ -38,12 +24,13 @@ function showHide(element_id){
 		echo '<h2>' . $table->title . '</h2>';
 		echo '<blockquote>';
 		echo '<div class="info_box bg_color">';
-			echo ' Posted by: <a href="profile.php?role=client&login=' . $table->login . '">' . $table->login . '</a><br />';
-			echo ' Date:' . $table->date_create . '<br />';
+			echo ' Заказчик: <a href="profile.php?role=client&login=' . $table->login . '">' . $table->login . '</a><br />';
+			echo ' Дата:' . $table->date_create . '<br />';
 		echo '</div>';
 		echo '<p>';
 			echo $describe;
 		echo '</p>';
+		
 		echo '<p><a href="javascript:showHide(' . $table->id_order . ');">Заявок : ' . $table->num . '</a></p>';
 		//echo '<p><a href="index.php">Заявок : ' . $table->num . '</a></p>';
 		echo '<div id="' . $table->id_order . '" style="display:none">';

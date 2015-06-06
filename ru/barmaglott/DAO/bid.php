@@ -9,6 +9,7 @@ class Bid {
 	private $login;
 	private $fk_id_employee;
 	private $fk_id_order;
+	private $selected;
 	/*
 	 * public function __construct($id_bid, $title, $describe_bid, $fk_id_employee, $fk_id_order) {
 	 * $this->id_bid = $id_bid;
@@ -38,6 +39,9 @@ class Bid {
 			case 'fk_id_order' :
 				$this->fk_id_order = $value;
 				break;
+			case 'selected' :
+				$this->selected = $value;
+				break;
 		}
 	}
 	public function __get($property) {
@@ -54,6 +58,8 @@ class Bid {
 				return $this->fk_id_employee;
 			case 'fk_id_order' :
 				return $this->fk_id_order;
+			case 'selected' :
+				return $this->selected;
 				break;
 		}
 	}

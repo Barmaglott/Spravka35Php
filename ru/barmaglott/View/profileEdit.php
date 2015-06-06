@@ -1,5 +1,13 @@
-
 <?php include_once 'identification.php';?>
+<script type="text/javascript">
+function destroy()
+{
+if (confirm("Bы уверены, что хотите уничтожить эту страницу?"))
+alert("Неужели вы думаете, что я позволю сделать это!?");
+else
+alert("Вопрос закрыт!") ;
+}
+</script>
 <div id="page">
 <div id="content">
 <h2><?php echo $list['msg'];?></h2>
@@ -12,10 +20,15 @@
 		<label for="login">Ваш логин:</label> 
 			<input type="text" name="login"	class="required" value="<?php echo $list['data']->login;?>" /><br /> 
 		</div>
+		
 			
 		<div>
 		<label for="email">Ваша почта:</label>
-			<input type="text" name="email"	class="validate-email required" value="<?php echo $list['data']->email;?>" />
+			<input type="email" name="email"	class="validate-email required" value="<?php echo $list['data']->email;?>" />
+		</div>
+		<div>
+			<label for="phone">Ваш телефон:</label>
+			<input type="tel" name="phone" class="required" value="<?php echo $list['data']->phone;?>" /><br />
 		</div>
 	 <div class="submit">
      	<input type="submit" name="submit" value="Изменить" class="button" />
@@ -25,16 +38,16 @@
 </form>
 
 <fieldset>
-	<legend>Contact Information</legend>
+	<legend>Информация о пользователе</legend>
 	<p style="font-weight:bold;">
 	<?php
 
 	$table = $list ['data'];
 	
 	//echo '<td>' . $table->id . '</td>';
-	echo 'Role: ' . $list['role'] . '<br />';
-	echo 'Login: ' . $table->login . '<br />';
-	echo 'E-mail: ' . $table->email . '<br />';
+	echo 'Роль: ' . $list['role'] . '<br />';
+	echo 'Логин: ' . $table->login . '<br />';
+	echo 'Почта: ' . $table->email . '<br />';
 	echo 'Всего ' . $list['role_data'] .' : ' . count($table->list);
 	?>
 	</p>	
@@ -49,6 +62,7 @@ foreach ( $table->list as $table_list ) {
 	echo '<p>';
 	echo $table_list->depiction;
 	echo '</p>';
+	//echo '<input type="button" value="Уничтожить страницу" onclick="destroy();" >';
 	echo '</blockquote>';
 	
 	//echo '<li>';

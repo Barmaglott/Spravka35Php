@@ -1,30 +1,3 @@
-<!DOCTYPE html>
-<head>
-<title>Spravka35</title>
-<meta http-equiv="Content-Type" content="text/html" charset="UTF-8" />
-<meta name="author" content="barmaglott" />
-<meta name="keywords"
-	content="simple, frilans, cherepovec, open project" />
-<meta name="description" content="Simple frilans board" />
-
-<link rel="stylesheet" href="style/minimalist.css" type="text/css"
-	media="screen" />
-<link rel="stylesheet" href="style/content-right.css" type="text/css"
-	media="screen" />
-<link rel="stylesheet" href="style/purple.css" type="text/css"
-	media="screen" />
-<link rel="stylesheet" href="style/bg_grey.css" type="text/css"
-	media="screen" />
-</head>
-
-<body>
-	<header>
-		<h1>
-			<a href="index.php">Spravka35</a>
-		</h1>
-	</header>
-
-
 <?php
 // use ru\barmaglott\DAO\DataBase;
 // use ru\barmaglott\DAO\Client;
@@ -33,6 +6,9 @@ use ru\barmaglott\Model\ClientModel;
 // use ru\barmaglott\Model\BidModel;
 use ru\barmaglott\Model\OrderModel;
 use ru\barmaglott\Controller\BidController;
+
+include_once 'templates/head.html';
+include_once 'templates/header.html';
 
 spl_autoload_register ( function ($class_name) {
 	$path_class_name = str_replace ( '\\', '/', $class_name ); // strtolower($class_name)
@@ -65,15 +41,6 @@ if (isset ($_GET ['id'] )){
  */
 include_once $list ['view'];
 
-?>
-  <footer>
-		<p>
-			Copyright &copy; <a href="#">barmaglott</a> 2015
-			<!-- While not required, I would appreciate this link being left in -->
-			| Design by <a href="http://xavisys.com"
-				title="Freelance Web Programming and Design">Xavisys</a>
+include_once 'templates/footer.html';
 
-		</p>
-	</footer>
-</body>
-</html>
+?>

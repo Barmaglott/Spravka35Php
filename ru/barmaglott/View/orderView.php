@@ -1,4 +1,3 @@
-
 <script type="text/javascript">
 function showHide(element_id){
 	var obj = document.getElementById(element_id);
@@ -7,6 +6,23 @@ function showHide(element_id){
 	}else{
 		obj.style.display = "none";
 	}		
+}
+function deleteOrder(id_order){
+	if (confirm("Вы уверены что хотите удалить ваш заказ?")){
+		//alert("Нет только не это");
+		self.location.href="?id="+id_order;	
+	}else{
+		alert("Вопрос снят!");
+	}
+}
+function selectBid(id_bid, id_order, login){
+	if (confirm("Вы уверены что хотите выбрать именно "+login+"?")){
+		//alert("Нет только не это");
+		alert("Вы выбрали "+login+". Теперь вам покажут визитную карточку выбранного исполнителя. Свяжитесь с ним любым удобным для вас способом.");
+		self.location.href="?id_bid="+id_bid+"&id_order="+id_order+"&login="+login;	
+	}else{
+		alert("Вопрос снят!");
+	}
 }
 
 </script>
@@ -28,6 +44,8 @@ function showHide(element_id){
 		</div>
 	</fieldset>
 	
+	
+	
 </form>
 <h2>Ваши заказы:</h2>
 	<?php
@@ -36,9 +54,17 @@ function showHide(element_id){
 		$describe = $table->depiction;
 		echo '<h2>' . $table->title . '</h2>';
 		echo '<blockquote>';
+			echo '<div style="float:right">';
+				//echo '<a  href="javascript:chelengOrder(' . $table->id_order . ');"> Изменить </a>';
+				echo '<a  href="javascript:deleteOrder(' . $table->id_order . ');"> Удалить </a>';
+				
+			echo '</div>';
 			echo '<p>';
 				echo $describe;
 			echo '</p>';
+			
+			//align="right"
+			
 			echo '<p><a href="javascript:showHide(' . $table->id_order . ');">Заявок : ' . $table->num . '</a></p>';
 			echo '<div id="' . $table->id_order . '" style="display:none">';
 				echo '<table cellspacing = "15">';
@@ -48,6 +74,12 @@ function showHide(element_id){
 						echo '<td><a href="profile.php?role=employee&login=' . $table_bid->login . '">' . $table_bid->login . '</a></td>';
 						echo '<td><h5>Заявка:</h5></td>';
 						echo '<td>' . $table_bid->depiction . '</td>';
+						if ($table->completed==0){
+							//echo var_dump($table_bid->login);
+							echo '<td><a  href="javascript:selectBid(' . $table_bid->id_bid . ', ' . $table->id_order . ', \'' .$table_bid->login . '\');"> Выбрать </a></td>';
+						}elseif ($table->completed==$table_bid->id_bid){
+							echo '<td><a href=#>Исполнитель</a></td>';
+						}
 					echo '</tr>';
 				}
 		

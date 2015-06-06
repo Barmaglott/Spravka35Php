@@ -22,6 +22,7 @@ session_start ();
 $identificationController = new IdentificationController ();
 $resIdent = $identificationController->identification ();
 echo '<div id="sidebar" class="bg_color">';
+include_once 'templates/menu.html';
 include_once $resIdent ['view'];
 echo '</div>';
 ?>

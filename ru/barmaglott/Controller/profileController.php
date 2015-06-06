@@ -35,6 +35,8 @@ class ProfileController {
 			$clientModel = new ClientModel ();
 			$client = $clientModel->getClientByName ( $user->login );
 			return array (
+					'role' => 'заказчик',
+					'role_data' => 'заказов',
 					'data' => $client,
 					'view' => 'ru/barmaglott/View/profileEdit.php' 
 			);
@@ -43,6 +45,8 @@ class ProfileController {
 			$employeeModel = new EmployeeModel ();
 			$employee = $employeeModel->getEmployeeByName ( $user->login );
 			return array (
+					'role' => 'исполнитель',
+					'role_data' => 'отзывов',
 					'data' => $employee,
 					'view' => 'ru/barmaglott/View/profileEdit.php' 
 			);
@@ -68,11 +72,11 @@ class ProfileController {
 		);
 	}
 	// TODO Создать функцию для создания профиля
-	public function addProfile($role, $login, $password, $email) {
+	public function addProfile($role, $login, $password, $email, $phone) {
 		if ($role == "client") {
 			$clientModel = new ClientModel ();
 			if (! $clientModel->getClientByName ( $login )) {
-				$clientModel->insertProfileClient ( $login, $password, $email );
+				$clientModel->insertProfileClient ( $login, $password, $email, $phone );
 				$clientModel->identificationClient ( $login, $password );
 				// $msg = "Теперь вы полноправный заказчик.";
 				// return $this->getProfileEdit($_SESSION['user']);
@@ -88,7 +92,7 @@ class ProfileController {
 		if ($role == "employee") {
 			$employeeModel = new EmployeeModel ();
 			if (! $employeeModel->getEmployeeByName ( $login )) {
-				$employeeModel->insertProfileEmployee ( $login, $password, $email );
+				$employeeModel->insertProfileEmployee ( $login, $password, $email, $phone);
 				$employeeModel->identificationEmployee ( $login, $password );
 				$home_url = 'http://' . $_SERVER ['HTTP_HOST'] . '/Spravka35Php/index.php';
 				header ( 'Location: ' . $home_url );

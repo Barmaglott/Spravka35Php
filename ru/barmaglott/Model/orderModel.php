@@ -1,10 +1,11 @@
 <?php
-
 namespace ru\barmaglott\Model;
 
 use ru\barmaglott\DAO\Order;
 use ru\barmaglott\DAO\DataBase;
 use ru\barmaglott\DAO\Bid;
+
+
 
 spl_autoload_register ( function ($class_name) {
 	$path_class_name = str_replace ( '\\', '/', $class_name ); // strtolower($class_name)
@@ -16,13 +17,14 @@ spl_autoload_register ( function ($class_name) {
 } );
 class OrderModel {
 	
-	// Выборка всех заказов без отзывов(но с кол-вом)
+	// Выборка всех заказов 
 	public function getAllOrder() {
 		$dbc = new DataBase ();
 		$objOrderOM = new Order ();
 		$resultOM = $dbc->queryReturnArray ( "SELECT o.id_order, o.title, o.depiction, o.date_create, c.login
   												FROM spravka35.order o INNER JOIN spravka35.client c 
 												ON o.fk_id_client = c.id 
+												WHERE o.approved = 1 AND o.completed = 0
 												ORDER BY o.date_create DESC", $objOrderOM );
 		//foreach ( $resultOM as $orderOM ) {
 			//$num = $dbc->querySelect ( "SELECT * FROM spravka35.bid WHERE fk_id_order='$orderOM->id_order'" );
@@ -48,10 +50,10 @@ class OrderModel {
 		$dbc = new DataBase ();
 		$objOrderOM = new Order ();
 		$objBidOM = new Bid ();
-		$resultOM = $dbc->queryReturnArray ( "SELECT o.id_order, o.title, o.depiction, o.date_create, c.login
+		$resultOM = $dbc->queryReturnArray ( "SELECT o.id_order, o.title, o.depiction, o.date_create, o.completed, c.login
   												FROM spravka35.order o INNER JOIN spravka35.client c 
 												ON o.fk_id_client = c.id 
-												 WHERE o.fk_id_client='$id' ", $objOrderOM );
+												 WHERE o.approved = 1 AND o.fk_id_client='$id' ", $objOrderOM );
 		foreach ( $resultOM as $orderOM ) {
 			
 			$resOM = $dbc->queryReturnArray ( "SELECT b.id_bid, b.title, b.depiction, e.login
@@ -75,7 +77,7 @@ class OrderModel {
 		$resultOM = $dbc->queryReturnArray ( "SELECT o.id_order, o.title, o.depiction, o.date_create, c.login
   												FROM spravka35.order o INNER JOIN spravka35.client c 
 												ON o.fk_id_client = c.id 
-												 WHERE o.id_order='$id' ", $objOrderOM );
+												WHERE o.approved = 1 AND o.id_order='$id' ", $objOrderOM );
 		foreach ( $resultOM as $orderOM ) {
 			// $obj1=new Bid();
 			$resOM = $dbc->queryReturnArray ( "SELECT b.id_bid, b.title, b.depiction, e.login
@@ -96,7 +98,8 @@ class OrderModel {
 		$objBidOM = new Order ();
 		$objBidOM = new Bid ();
 		
-		$orderOM = $dbc->queryReturnObject ( "SELECT * FROM spravka35.order WHERE id_order='$id'", $objOrderOM );
+		$orderOM = $dbc->queryReturnObject ( "SELECT * FROM spravka35.order 
+					WHERE o.approved = 1 AND id_order='$id'", $objOrderOM );
 		
 		// $obj1=new Bid();
 		$resultOM = $dbc->queryReturnArray ( "SELECT * FROM spravka35.bid WHERE fk_id_order='$orderOM->id_order'", $objBidOM );
@@ -110,7 +113,17 @@ class OrderModel {
 	// Добавление заказов
 	public function addOrder($title, $describe_order, $user_id) {
 		$dbc = new DataBase ();
-		$dbc->queryAdd ( "INSERT spravka35.order VALUES (0,'$title' , '$describe_order', NOW(), '$user_id')" );
+		$dbc->queryAdd ( "INSERT spravka35.order VALUES (0,'$title' , '$describe_order', NOW(), '$user_id', 1, 0)" );
+	}
+	//Удаление заказа
+	public function deleteOrder($id_order){
+		$dbc = new DataBase();
+		$dbc->queryAdd("UPDATE spravka35.order SET approved=0 WHERE id_order='$id_order'");
+	}
+	//Выбор исполнителя
+	public function selectBid($id_bid, $id_order){
+		$dbc = new DataBase();
+		$dbc->queryAdd("UPDATE spravka35.order SET completed='$id_bid' WHERE id_order='$id_order'");
 	}
 }
 ?>

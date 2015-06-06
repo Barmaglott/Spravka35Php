@@ -32,7 +32,12 @@ class BidModel {
 	// Добавление отзыва
 	public function addBid($title, $describe_bid, $fk_id_employee, $fk_id_order) {
 		$dbc = new DataBase ();
-		$dbc->queryAdd ( "INSERT spravka35.bid VALUES (0,'$title' , '$describe_bid', '$fk_id_employee', '$fk_id_order')" );
+		$dbc->queryAdd ( "INSERT spravka35.bid VALUES (0,'$title' , '$describe_bid', '$fk_id_employee', '$fk_id_order', 0)" );
+	}
+	//Выбор заказа
+	public function selectBid($id_bid){
+		$dbc = new DataBase();
+		$dbc->queryAdd("UPDATE spravka35.bid SET selected = 1 WHERE id_bid='$id_bid'");
 	}
 }
 ?>

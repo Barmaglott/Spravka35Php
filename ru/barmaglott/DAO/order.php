@@ -11,6 +11,7 @@ class Order {
 	private $login;
 	private $num;
 	private $list;
+	private $completed;
 	/*
 	 * public function __construct($id_order, $title, $describe_order, $date_create, $fk_id_client) {
 	 * $this->id_order = $id_order;
@@ -46,6 +47,9 @@ class Order {
 			case 'list' :
 				$this->list [] = $value;
 				break;
+			case 'completed' :
+				$this->completed = $value;
+				break;
 		}
 	}
 	public function __get($property) {
@@ -66,6 +70,8 @@ class Order {
 				return $this->num;
 			case 'list' :
 				return $this->list;
+			case 'completed' :
+				return $this->completed;
 				break;
 		}
 	}

@@ -6,26 +6,8 @@ use ru\barmaglott\DAO\DataBase;
 use ru\barmaglott\DAO\Client;
 use ru\barmaglott\DAO\Order;
 use ru\barmaglott\DAO\ru\barmaglott\DAO;
-// use ru\barmaglott\Model\User;
-
-/*
- * spl_autoload_register(function ($class_name){
- * $path_class_name=str_replace('\\', '/', $class_name);//strtolower($class_name)
- * $pos = strrpos($path_class_name, '/');
- * $name = substr($path_class_name, $pos+1);
- * $path_class_name=substr($path_class_name,0,$pos+1).lcfirst($name);
- *
- * include_once('../../../'.$path_class_name . '.php');
- * });
- */
 class ClientModel {
-	/*
-	 * private $client;
-	 * static public function getClient(){
-	 * (self::client)? $result = self::client: $result = false;
-	 * return $result;
-	 * }
-	 */
+	
 	// Выборка списка всех клиентов-заказчиков
 	public function getAllClient() {
 		$dbc = new DataBase ();
@@ -72,7 +54,7 @@ class ClientModel {
 		
 		foreach ( $result as $client ) {
 			$obj1 = new Order ();
-			$res = $dbc->queryReturnArray ( "SELECT * FROM spravka35.order WHERE fk_id_client='$client->id'", $obj1 );
+			$res = $dbc->queryReturnArray ( "SELECT * FROM spravka35.order WHERE approved = 1 AND fk_id_client='$client->id'", $obj1 );
 			// var_dump($res);
 			foreach ( $res as $order ) {
 				$client->list = $order;
@@ -109,9 +91,9 @@ class ClientModel {
 		// password = SHA('$password'),
 		$result = $dbc->queryAdd ( "UPDATE spravka35.client SET  email = '$email' WHERE id = '$id' and login = '$login' " );
 	}
-	public function insertProfileClient($login, $password, $email) {
+	public function insertProfileClient($login, $password, $email, $phone) {
 		$dbc = new DataBase ();
-		$dbc->queryAdd ( "INSERT INTO spravka35.client (login, password, email) VALUES ('$login', SHA('$password'), '$email')" );
+		$dbc->queryAdd ( "INSERT INTO spravka35.client (login, password, email, phone, date_create) VALUES ('$login', SHA('$password'), '$email', '$phone', NOW())" );
 	}
 }
 ?>

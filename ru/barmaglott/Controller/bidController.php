@@ -51,5 +51,7 @@ class BidController {
 		
 		// return array('view'=>'ru/barmaglott/View/bidView.php');
 	}
+	
+
 }
 ?>
